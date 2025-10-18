@@ -23,6 +23,12 @@ export class ApiService{
         if (filters.gender) {
             params = params.set('gender', filters.gender);
         }
+        if (filters.species) {
+            params = params.set('species', filters.species);
+        }
+        if (filters.type) {
+            params = params.set('type', filters.type);
+        }
         
         return this.http.get<CharacterResponse>(`${this.baseUrl}/character`, { params });
     }

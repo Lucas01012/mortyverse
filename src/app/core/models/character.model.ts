@@ -33,4 +33,6 @@ export interface CharacterFilters {
   name?: string;
   status?: string;
   gender?: string;
+  species?: string;
+  type?: string;
 }

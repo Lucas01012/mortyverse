@@ -6,7 +6,6 @@ export interface QuizFilters {
   status?: string;
   species?: string;
   gender?: string;
-  type?: string;
 }
 
 @Component({
@@ -24,13 +23,12 @@ export class QuizForm {
   selectedStatus = signal<string>('');
   selectedSpecies = signal<string>('');
   selectedGender = signal<string>('');
-  selectedType = signal<string>('');
 
-  // Opções disponíveis
+  // Opções disponíveis (valores devem corresponder exatamente aos da API)
   statusOptions = [
     { value: '', label: 'Qualquer' },
-    { value: 'alive', label: 'Vivo' },
-    { value: 'dead', label: 'Morto' },
+    { value: 'Alive', label: 'Vivo' },
+    { value: 'Dead', label: 'Morto' },
     { value: 'unknown', label: 'Desconhecido' }
   ];
 
@@ -42,6 +40,7 @@ export class QuizForm {
     { value: 'Robot', label: 'Robô' },
     { value: 'Cronenberg', label: 'Cronenberg' },
     { value: 'Animal', label: 'Animal' },
+    { value: 'Poopybutthole', label: 'Poopybutthole' },
     { value: 'Mythological Creature', label: 'Criatura Mitológica' }
   ];
 
@@ -51,14 +50,6 @@ export class QuizForm {
     { value: 'Female', label: 'Feminino' },
     { value: 'Genderless', label: 'Sem gênero' },
     { value: 'unknown', label: 'Desconhecido' }
-  ];
-
-  typeOptions = [
-    { value: '', label: 'Qualquer' },
-    { value: 'Human with antennae', label: 'Humano com antenas' },
-    { value: 'Parasite', label: 'Parasita' },
-    { value: 'Cat', label: 'Gato' },
-    { value: 'Dog', label: 'Cachorro' }
   ];
 
   onSubmit(): void {
@@ -73,9 +64,6 @@ export class QuizForm {
     if (this.selectedGender()) {
       filters.gender = this.selectedGender();
     }
-    if (this.selectedType()) {
-      filters.type = this.selectedType();
-    }
 
     this.submitFilters.emit(filters);
   }
@@ -84,6 +72,5 @@ export class QuizForm {
     this.selectedStatus.set('');
     this.selectedSpecies.set('');
     this.selectedGender.set('');
-    this.selectedType.set('');
   }
 }

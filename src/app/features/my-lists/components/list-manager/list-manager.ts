@@ -1,4 +1,5 @@
 import { Component, signal, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { CustomList, CreateListDto, UpdateListDto } from '../../../../core/models/custom-list.model';
 import { ListsState } from '../../../../core/state/lists.state';
 import { ListItem } from '../list-item/list-item';
@@ -12,6 +13,7 @@ import { AddListForm } from '../add-list-form/add-list-form';
 })
 export class ListManager {
   private listsState = inject(ListsState);
+  private router = inject(Router);
   protected lists = this.listsState.allLists;
   protected showForm = signal(false);
   protected editingList = signal<CustomList | null>(null);
@@ -50,6 +52,6 @@ export class ListManager {
   }
 
   protected onViewList(list: CustomList): void {
-    console.log('View list details:', list);
+    this.router.navigate(['/my-lists', list.id]);
   }
 }

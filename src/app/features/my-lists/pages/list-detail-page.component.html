@@ -1,0 +1,197 @@
+<div class="list-detail-page">
+  @if (list()) {
+    <section class="list-detail-page__hero">
+      <div class="container">
+        <div class="list-detail-page__header">
+          <a routerLink="/my-lists" class="back-button">
+            ← Voltar para listas
+          </a>
+          
+          @if (!isEditingList()) {
+            <div class="list-info">
+              <h1 class="list-info__title">{{ list()!.name }}</h1>
+              @if (list()!.description) {
+                <p class="list-info__description">{{ list()!.description }}</p>
+              }
+              <span class="list-info__count">
+                {{ list()!.characters.length }} {{ list()!.characters.length === 1 ? 'personagem' : 'personagens' }}
+              </span>
+            </div>
+
+            <div class="list-actions">
+              <button class="btn btn-secondary" (click)="onEditList()" type="button">
+                ✏️ Editar
+              </button>
+              <button class="btn btn-primary" (click)="onOpenSearchModal()" type="button">
+                ➕ Adicionar Personagens
+              </button>
+              <button class="btn btn-danger" (click)="onDeleteList()" type="button">
+                🗑️ Excluir Lista
+              </button>
+            </div>
+          } @else {
+            <div class="edit-form">
+              <app-add-list-form
+                [editMode]="true"
+                [initialName]="list()!.name"
+                [initialDescription]="list()!.description || ''"
+                (listUpdated)="onUpdateList($event)"
+                (cancelled)="onCancelEdit()"
+              />
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="list-detail-page__content">
+      <div class="container">
+        @if (hasCharacters()) {
+          <div class="characters-grid">
+            @for (character of list()!.characters; track character.id) {
+              <app-character-card
+                [character]="character"
+                [showRemoveButton]="true"
+                (viewDetails)="onViewDetails($event)"
+                (removeFromList)="onConfirmRemove($event)"
+              />
+            }
+          </div>
+        } @else {
+          <div class="empty-state">
+            <span class="empty-state__icon">👤</span>
+            <h3 class="empty-state__title">Nenhum personagem adicionado</h3>
+            <p class="empty-state__description">
+              Adicione personagens à sua lista para começar a organizar seus favoritos!
+            </p>
+            <button class="btn btn-primary" (click)="onOpenSearchModal()" type="button">
+              ➕ Adicionar Personagens
+            </button>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
+  <app-modal
+    [isOpen]="isSearchModalOpen()"
+    (close)="onCloseSearchModal()"
+  >
+    <span modalTitle>Buscar Personagens</span>
+
+    <div class="search-modal">
+      <div class="search-field">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange($event)"
+          placeholder="Digite o nome do personagem..."
+          class="search-input"
+        />
+      </div>
+
+      @if (isSearching()) {
+        <div class="search-loading">
+          <p>Buscando...</p>
+        </div>
+      } @else if (searchResults().length > 0) {
+        <div class="search-results">
+          @for (character of searchResults(); track character.id) {
+            <div class="search-result-item">
+              <img [src]="character.image" [alt]="character.name" class="search-result-item__image" />
+              <div class="search-result-item__info">
+                <h4 class="search-result-item__name">{{ character.name }}</h4>
+                <p class="search-result-item__status">{{ character.status }} - {{ character.species }}</p>
+              </div>
+              <button
+                class="btn btn-sm"
+                [class.btn-secondary]="isCharacterInList(character)"
+                [class.btn-primary]="!isCharacterInList(character)"
+                (click)="onAddCharacter(character)"
+                [disabled]="isCharacterInList(character)"
+                type="button"
+              >
+                {{ isCharacterInList(character) ? '✓ Adicionado' : '+ Adicionar' }}
+              </button>
+            </div>
+          }
+        </div>
+      } @else if (searchTerm().length >= 2) {
+        <p class="no-results">Nenhum personagem encontrado.</p>
+      } @else {
+        <p class="search-hint">Digite pelo menos 2 caracteres para buscar.</p>
+      }
+    </div>
+
+    <div modalFooter>
+      <button class="btn btn-secondary" (click)="onCloseSearchModal()" type="button">
+        Fechar
+      </button>
+    </div>
+  </app-modal>
+
+  <app-modal
+    [isOpen]="isRemoveModalOpen()"
+    (close)="onCancelRemove()"
+  >
+    <span modalTitle>Remover Personagem</span>
+
+    @if (characterToRemove()) {
+      <div class="remove-modal">
+        <p>Tem certeza que deseja remover <strong>{{ characterToRemove()!.name }}</strong> desta lista?</p>
+      </div>
+    }
+
+    <div modalFooter>
+      <button class="btn btn-secondary" (click)="onCancelRemove()" type="button">
+        Cancelar
+      </button>
+      <button class="btn btn-danger" (click)="onRemoveCharacter()" type="button">
+        Remover
+      </button>
+    </div>
+  </app-modal>
+
+  <app-modal
+    [isOpen]="isDetailModalOpen()"
+    (close)="onCloseDetailModal()"
+  >
+    <span modalTitle>{{ (selectedCharacter()?.name || '') | truncate:30 }}</span>
+    
+    @if (selectedCharacter()) {
+      <div class="character-detail">
+        <div class="character-detail__image">
+          <img [src]="selectedCharacter()!.image" [alt]="selectedCharacter()!.name" />
+        </div>
+        <div class="character-detail__info">
+          <div class="character-detail__row">
+            <span class="character-detail__label">Status:</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.status }}</span>
+          </div>
+          <div class="character-detail__row">
+            <span class="character-detail__label">Espécie:</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.species }}</span>
+          </div>
+          <div class="character-detail__row">
+            <span class="character-detail__label">Gênero:</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.gender }}</span>
+          </div>
+          <div class="character-detail__row">
+            <span class="character-detail__label">Origem:</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.origin.name | truncate:40:true }}</span>
+          </div>
+          <div class="character-detail__row">
+            <span class="character-detail__label">Localização:</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.location.name | truncate:40:true }}</span>
+          </div>
+        </div>
+      </div>
+    }
+
+    <div modalFooter>
+      <button class="btn btn-primary" (click)="onCloseDetailModal()">
+        Fechar
+      </button>
+    </div>
+  </app-modal>
+</div>

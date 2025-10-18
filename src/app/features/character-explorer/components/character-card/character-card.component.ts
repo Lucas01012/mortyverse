@@ -10,9 +10,11 @@ import { LazyImageDirective } from '../../../../shared/directives/lazy-image.dir
 })
 export class CharacterCard {
   character = input.required<Character>();
+  showRemoveButton = input<boolean>(false);
   
   viewDetails = output<Character>();
   addToList = output<Character>();
+  removeFromList = output<Character>();
 
   protected onViewDetails(): void {
     this.viewDetails.emit(this.character());
@@ -20,5 +22,9 @@ export class CharacterCard {
 
   protected onAddToList(): void {
     this.addToList.emit(this.character());
+  }
+
+  protected onRemoveFromList(): void {
+    this.removeFromList.emit(this.character());
   }
 }

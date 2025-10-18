@@ -15,9 +15,15 @@
       <button class="character-card__btn character-card__btn--primary" (click)="onViewDetails()">
         Ver Detalhes
       </button>
-      <button class="character-card__btn character-card__btn--secondary" (click)="onAddToList()">
-        <span class="character-card__icon">➕</span>
-      </button>
+      @if (!showRemoveButton()) {
+        <button class="character-card__btn character-card__btn--secondary" (click)="onAddToList()">
+          <span class="character-card__icon">➕</span>
+        </button>
+      } @else {
+        <button class="character-card__btn character-card__btn--danger" (click)="onRemoveFromList()">
+          <span class="character-card__icon">🗑️</span>
+        </button>
+      }
     </div>
   </div>
 

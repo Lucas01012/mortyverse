@@ -7,10 +7,11 @@ import { CharacterList } from '../../components/character-list/character-list.co
 import { Pagination } from '../../../../shared/components/pagination/pagination';
 import { Modal } from '../../../../shared/components/modal/modal';
 import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
+import { AddToListModal } from '../../../../shared/components/add-to-list-modal/add-to-list-modal';
 
 @Component({
   selector: 'app-character-explorer-page',
-  imports: [SearchBar, CharacterList, Pagination, Modal, TruncatePipe],
+  imports: [SearchBar, CharacterList, Pagination, Modal, TruncatePipe, AddToListModal],
   templateUrl: './character-explorer-page.component.html',
   styleUrl: './character-explorer-page.component.scss'
 })
@@ -26,6 +27,9 @@ export class CharacterExplorerPage implements OnInit {
   
   protected isModalOpen = signal(false);
   protected selectedCharacter = signal<Character | null>(null);
+  
+  protected isAddToListModalOpen = signal(false);
+  protected characterToAdd = signal<Character | null>(null);
 
   protected allCharacters = signal<Character[]>([]);
   protected totalPages = signal(1);
@@ -100,8 +104,19 @@ export class CharacterExplorerPage implements OnInit {
   }
 
   protected onAddToList(character: Character): void {
-    console.log('Add to list:', character.name);
-    alert(`${character.name} será adicionado à sua lista! (funcionalidade em desenvolvimento)`);
+    this.characterToAdd.set(character);
+    this.isAddToListModalOpen.set(true);
+  }
+
+  protected onCloseAddToListModal(): void {
+    this.isAddToListModalOpen.set(false);
+    setTimeout(() => {
+      this.characterToAdd.set(null);
+    }, 300);
+  }
+
+  protected onCharacterAdded(): void {
+    console.log('Personagem adicionado à lista com sucesso!');
   }
 
   protected onCloseModal(): void {

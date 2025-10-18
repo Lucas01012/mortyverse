@@ -14,6 +14,12 @@ export const routes: Routes = [
     title: 'Minhas Listas | Mortyverse'
   },
   {
+    path: 'my-lists/:id',
+    loadComponent: () => import('./features/my-lists/pages/list-detail-page.component')
+      .then(m => m.ListDetailPage),
+    title: 'Detalhes da Lista | Mortyverse'
+  },
+  {
     path: '**',
     redirectTo: ''
   }

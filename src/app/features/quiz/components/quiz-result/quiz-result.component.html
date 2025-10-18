@@ -8,9 +8,8 @@
     <div class="quiz-result__content">
       <div class="quiz-result__image">
         <img 
-          [src]="character()!.image" 
+          [appLazyImage]="character()!.image" 
           [alt]="character()!.name"
-          appLazyImage
         />
       </div>
 

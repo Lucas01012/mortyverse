@@ -1,13 +1,6 @@
-/* ===================================
-   CHARACTER LIST COMPONENT STYLES
-   =================================== */
-
 .character-list {
   width: 100%;
 
-  /* ===================================
-     GRID
-     =================================== */
   &__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -19,9 +12,6 @@
     }
   }
 
-  /* ===================================
-     LOADING STATE
-     =================================== */
   &__loading {
     display: flex;
     flex-direction: column;
@@ -40,9 +30,6 @@
     }
   }
 
-  /* ===================================
-     EMPTY STATE
-     =================================== */
   &__empty {
     display: flex;
     flex-direction: column;
@@ -77,9 +64,6 @@
   }
 }
 
-/* ===================================
-   ANIMATIONS
-   =================================== */
 @keyframes fadeIn {
   from {
     opacity: 0;

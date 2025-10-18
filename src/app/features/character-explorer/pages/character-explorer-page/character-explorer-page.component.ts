@@ -12,7 +12,6 @@ import { Modal } from '../../../../shared/components/modal/modal';
   styleUrl: './character-explorer-page.component.scss'
 })
 export class CharacterExplorerPage {
-  // State
   protected isLoading = signal(false);
   protected searchTerm = signal('');
   protected statusFilter = signal('');
@@ -23,7 +22,6 @@ export class CharacterExplorerPage {
   protected isModalOpen = signal(false);
   protected selectedCharacter = signal<Character | null>(null);
 
-  // Mock data - substitua pela API depois
   protected allCharacters = signal<Character[]>([
     {
       id: 1,
@@ -195,11 +193,9 @@ export class CharacterExplorerPage {
     }
   ]);
 
-  // Computed: filtered characters
   protected filteredCharacters = computed(() => {
     let filtered = this.allCharacters();
 
-    // Filter by search term
     if (this.searchTerm()) {
       const term = this.searchTerm().toLowerCase();
       filtered = filtered.filter(c => 
@@ -207,14 +203,12 @@ export class CharacterExplorerPage {
       );
     }
 
-    // Filter by status
     if (this.statusFilter()) {
       filtered = filtered.filter(c => 
         c.status.toLowerCase() === this.statusFilter().toLowerCase()
       );
     }
 
-    // Filter by gender
     if (this.genderFilter()) {
       filtered = filtered.filter(c => 
         c.gender.toLowerCase() === this.genderFilter().toLowerCase()
@@ -224,22 +218,19 @@ export class CharacterExplorerPage {
     return filtered;
   });
 
-  // Computed: total pages
   protected totalPages = computed(() => 
     Math.ceil(this.filteredCharacters().length / this.itemsPerPage)
   );
 
-  // Computed: paginated characters
   protected paginatedCharacters = computed(() => {
     const start = (this.currentPage() - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
     return this.filteredCharacters().slice(start, end);
   });
 
-  // Event handlers
   protected onSearchChange(term: string): void {
     this.searchTerm.set(term);
-    this.currentPage.set(1); // Reset to first page
+    this.currentPage.set(1);
   }
 
   protected onStatusChange(status: string): void {
@@ -254,7 +245,6 @@ export class CharacterExplorerPage {
 
   protected onPageChange(page: number): void {
     this.currentPage.set(page);
-    // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -264,7 +254,6 @@ export class CharacterExplorerPage {
   }
 
   protected onAddToList(character: Character): void {
-    // TODO: Implement add to list logic
     console.log('Add to list:', character.name);
     alert(`${character.name} será adicionado à sua lista! (funcionalidade em desenvolvimento)`);
   }

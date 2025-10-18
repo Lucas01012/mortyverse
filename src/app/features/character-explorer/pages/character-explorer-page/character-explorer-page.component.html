@@ -1,9 +1,5 @@
-<!-- ===================================
-     CHARACTER EXPLORER PAGE
-     =================================== -->
 <div class="character-explorer">
 
-  <!-- Hero Section -->
   <section class="character-explorer__hero">
     <div class="container">
       <h1 class="character-explorer__title">
@@ -15,7 +11,6 @@
     </div>
   </section>
 
-  <!-- Search Section -->
   <section class="character-explorer__search">
     <div class="container">
       <app-search-bar 
@@ -29,11 +24,9 @@
     </div>
   </section>
 
-  <!-- Results Section -->
   <section class="character-explorer__results">
     <div class="container">
       
-      <!-- Results Info -->
       @if (!isLoading() && filteredCharacters().length > 0) {
         <div class="character-explorer__info">
           <p class="character-explorer__count">
@@ -42,7 +35,6 @@
         </div>
       }
 
-      <!-- Character List -->
       <app-character-list 
         [characters]="paginatedCharacters()"
         [isLoading]="isLoading()"
@@ -50,7 +42,6 @@
         (addToList)="onAddToList($event)"
       />
 
-      <!-- Pagination -->
       @if (!isLoading() && filteredCharacters().length > 0) {
         <div class="character-explorer__pagination">
           <app-pagination 
@@ -64,7 +55,6 @@
     </div>
   </section>
 
-  <!-- Character Detail Modal -->
   <app-modal 
     [isOpen]="isModalOpen()"
     (close)="onCloseModal()"

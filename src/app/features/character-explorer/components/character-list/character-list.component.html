@@ -1,9 +1,5 @@
-<!-- ===================================
-     CHARACTER LIST COMPONENT
-     =================================== -->
 <div class="character-list">
   
-  <!-- Loading State -->
   @if (isLoading()) {
     <div class="character-list__loading">
       <div class="loading-spinner"></div>
@@ -11,7 +7,6 @@
     </div>
   }
 
-  <!-- Empty State -->
   @else if (characters().length === 0) {
     <div class="character-list__empty">
       <div class="character-list__empty-icon">🔍</div>
@@ -22,7 +17,6 @@
     </div>
   }
 
-  <!-- Grid of Characters -->
   @else {
     <div class="character-list__grid">
       @for (character of characters(); track character.id) {

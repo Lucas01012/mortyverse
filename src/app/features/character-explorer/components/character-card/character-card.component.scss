@@ -1,7 +1,3 @@
-/* ===================================
-   CHARACTER CARD COMPONENT STYLES
-   =================================== */
-
 .character-card {
   background: var(--bg-secondary);
   border: 2px solid var(--gray-700);
@@ -23,9 +19,6 @@
     }
   }
 
-  /* ===================================
-     IMAGE
-     =================================== */
   &__image-wrapper {
     position: relative;
     width: 100%;
@@ -84,9 +77,6 @@
     text-transform: capitalize;
   }
 
-  /* ===================================
-     CONTENT
-     =================================== */
   &__content {
     padding: var(--spacing-lg);
     display: flex;
@@ -109,9 +99,6 @@
     overflow: hidden;
   }
 
-  /* ===================================
-     INFO
-     =================================== */
   &__info {
     display: flex;
     flex-direction: column;
@@ -141,9 +128,6 @@
     text-overflow: ellipsis;
   }
 
-  /* ===================================
-     ACTIONS
-     =================================== */
   &__actions {
     display: flex;
     gap: var(--spacing-sm);
@@ -212,9 +196,6 @@
   }
 }
 
-/* ===================================
-   ANIMATIONS
-   =================================== */
 @keyframes pulse {
   0%, 100% {
     opacity: 1;

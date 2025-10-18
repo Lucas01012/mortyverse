@@ -1,13 +1,6 @@
-/* ===================================
-   CHARACTER EXPLORER PAGE STYLES
-   =================================== */
-
 .character-explorer {
   min-height: 100vh;
 
-  /* ===================================
-     HERO SECTION
-     =================================== */
   &__hero {
     padding: var(--spacing-3xl) 0 var(--spacing-2xl);
     text-align: center;
@@ -63,17 +56,11 @@
     z-index: 2;
   }
 
-  /* ===================================
-     SEARCH SECTION
-     =================================== */
   &__search {
     padding: var(--spacing-2xl) 0;
     background: var(--bg-primary);
   }
 
-  /* ===================================
-     RESULTS SECTION
-     =================================== */
   &__results {
     padding: var(--spacing-xl) 0 var(--spacing-3xl);
     background: var(--bg-primary);
@@ -104,9 +91,6 @@
   }
 }
 
-/* ===================================
-   CHARACTER DETAIL (MODAL CONTENT)
-   =================================== */
 .character-detail {
   display: flex;
   flex-direction: column;
@@ -165,9 +149,6 @@
   }
 }
 
-/* ===================================
-   ANIMATIONS
-   =================================== */
 @keyframes pulse {
   0%, 100% {
     opacity: 1;

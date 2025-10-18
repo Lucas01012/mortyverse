@@ -1,9 +1,5 @@
-<!-- ===================================
-     CHARACTER CARD COMPONENT
-     =================================== -->
 <article class="character-card">
   
-  <!-- Image Container -->
   <div class="character-card__image-wrapper">
     <img 
       [src]="character().image || 'https://via.placeholder.com/300x300?text=No+Image'" 
@@ -17,13 +13,10 @@
     </div>
   </div>
 
-  <!-- Content -->
   <div class="character-card__content">
     
-    <!-- Name -->
     <h3 class="character-card__name">{{ character().name }}</h3>
 
-    <!-- Info Grid -->
     <div class="character-card__info">
       <div class="character-card__info-item">
         <span class="character-card__label">Espécie:</span>
@@ -43,7 +36,6 @@
       </div>
     </div>
 
-    <!-- Actions -->
     <div class="character-card__actions">
       <button class="character-card__btn character-card__btn--primary" (click)="onViewDetails()">
         Ver Detalhes

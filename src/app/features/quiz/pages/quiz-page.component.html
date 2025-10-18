@@ -1,0 +1,30 @@
+<div class="quiz-page">
+  <div class="quiz-page__container">
+    @if (!resultCharacter() && !isLoading()) {
+      <app-quiz-form (submitFilters)="onFiltersSubmit($event)" />
+    }
+
+    @if (isLoading()) {
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Descobrindo seu personagem...</p>
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <div class="error-message">
+        <p>{{ errorMessage() }}</p>
+        <button class="btn btn--primary" (click)="onTryAgain()">
+          Tentar Novamente
+        </button>
+      </div>
+    }
+
+    @if (resultCharacter()) {
+      <app-quiz-result 
+        [character]="resultCharacter()" 
+        (tryAgain)="onTryAgain()"
+      />
+    }
+  </div>
+</div>

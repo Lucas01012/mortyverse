@@ -1,1 +1,55 @@
-<p>quiz-result works!</p>
+@if (character()) {
+  <div class="quiz-result">
+    <div class="quiz-result__header">
+      <h2 class="quiz-result__title">Seu Personagem é...</h2>
+      <h3 class="quiz-result__character-name">{{ character()!.name }}</h3>
+    </div>
+
+    <div class="quiz-result__content">
+      <div class="quiz-result__image">
+        <img 
+          [src]="character()!.image" 
+          [alt]="character()!.name"
+          appLazyImage
+        />
+      </div>
+
+      <div class="quiz-result__info">
+        <div class="info-card">
+          <div class="info-card__row">
+            <span class="info-card__label">Status:</span>
+            <span class="info-card__value">{{ character()!.status }}</span>
+          </div>
+          <div class="info-card__row">
+            <span class="info-card__label">Espécie:</span>
+            <span class="info-card__value">{{ character()!.species }}</span>
+          </div>
+          <div class="info-card__row">
+            <span class="info-card__label">Gênero:</span>
+            <span class="info-card__value">{{ character()!.gender }}</span>
+          </div>
+          @if (character()!.type) {
+            <div class="info-card__row">
+              <span class="info-card__label">Tipo:</span>
+              <span class="info-card__value">{{ character()!.type }}</span>
+            </div>
+          }
+          <div class="info-card__row">
+            <span class="info-card__label">Origem:</span>
+            <span class="info-card__value">{{ character()!.origin.name }}</span>
+          </div>
+          <div class="info-card__row">
+            <span class="info-card__label">Localização:</span>
+            <span class="info-card__value">{{ character()!.location.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-result__actions">
+      <button class="btn btn--primary" (click)="onTryAgain()">
+        Tentar Novamente
+      </button>
+    </div>
+  </div>
+}

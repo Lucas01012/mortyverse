@@ -1,1 +1,75 @@
-<p>quiz-form works!</p>
+<div class="quiz-form">
+  <div class="quiz-form__header">
+    <h2 class="quiz-form__title">Qual personagem de Rick and Morty você é?</h2>
+    <p class="quiz-form__description">
+      Selecione algumas características e descubra qual personagem combina com você!
+    </p>
+  </div>
+
+  <form class="quiz-form__content" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="status" class="form-label">Status</label>
+      <select 
+        id="status" 
+        class="form-select"
+        [(ngModel)]="selectedStatus"
+        name="status"
+      >
+        @for (option of statusOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="species" class="form-label">Espécie</label>
+      <select 
+        id="species" 
+        class="form-select"
+        [(ngModel)]="selectedSpecies"
+        name="species"
+      >
+        @for (option of speciesOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="gender" class="form-label">Gênero</label>
+      <select 
+        id="gender" 
+        class="form-select"
+        [(ngModel)]="selectedGender"
+        name="gender"
+      >
+        @for (option of genderOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="type" class="form-label">Tipo</label>
+      <select 
+        id="type" 
+        class="form-select"
+        [(ngModel)]="selectedType"
+        name="type"
+      >
+        @for (option of typeOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn--secondary" (click)="onReset()">
+        Limpar
+      </button>
+      <button type="submit" class="btn btn--primary">
+        Descobrir Personagem
+      </button>
+    </div>
+  </form>
+</div>

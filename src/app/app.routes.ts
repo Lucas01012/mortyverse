@@ -20,6 +20,12 @@ export const routes: Routes = [
     title: 'Detalhes da Lista | Mortyverse'
   },
   {
+    path: 'quiz',
+    loadComponent: () => import('./features/quiz/pages/quiz-page.component')
+      .then(m => m.QuizPage),
+    title: 'Quiz | Mortyverse'
+  },
+  {
     path: '**',
     redirectTo: ''
   }

@@ -1,8 +1,3 @@
-/* ===================================
-   CHARACTER MODEL
-   Based on Rick and Morty API
-   =================================== */
-
 export interface Character {
   id: number;
   name: string;
@@ -31,4 +26,11 @@ export interface CharacterResponse {
     prev: string | null;
   };
   results: Character[];
+}
+
+export interface CharacterFilters {
+  page?: number;
+  name?: string;
+  status?: string;
+  gender?: string;
 }

@@ -1,1 +1,51 @@
-<p>add-list-form works!</p>
+<div class="add-list-form">
+  <form (ngSubmit)="onSubmit()" class="add-list-form__form">
+    <div class="add-list-form__field">
+      <label for="listName" class="add-list-form__label">
+        Nome da Lista *
+      </label>
+      <input
+        type="text"
+        id="listName"
+        [(ngModel)]="name"
+        name="listName"
+        class="add-list-form__input"
+        placeholder="Ex: Meus favoritos"
+        required
+        maxlength="50"
+      />
+    </div>
+
+    <div class="add-list-form__field">
+      <label for="listDescription" class="add-list-form__label">
+        Descrição (opcional)
+      </label>
+      <textarea
+        id="listDescription"
+        [(ngModel)]="description"
+        name="listDescription"
+        class="add-list-form__textarea"
+        placeholder="Adicione uma descrição para sua lista..."
+        rows="3"
+        maxlength="200"
+      ></textarea>
+    </div>
+
+    <div class="add-list-form__actions">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="onCancel()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!name().trim()"
+      >
+        {{ editMode() ? 'Atualizar' : 'Criar Lista' }}
+      </button>
+    </div>
+  </form>
+</div>

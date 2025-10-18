@@ -1,9 +1,10 @@
 import { Component, input, output } from '@angular/core';
 import { Character } from '../../../../core/models/character.model';
+import { LazyImageDirective } from '../../../../shared/directives/lazy-image.directive';
 
 @Component({
   selector: 'app-character-card',
-  imports: [],
+  imports: [LazyImageDirective],
   templateUrl: './character-card.component.html',
   styleUrl: './character-card.component.scss'
 })

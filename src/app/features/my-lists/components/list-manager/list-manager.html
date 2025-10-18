@@ -1,1 +1,47 @@
-<p>list-manager works!</p>
+<div class="list-manager">
+  <div class="list-manager__header">
+    <button 
+      class="btn btn-primary"
+      (click)="onShowForm()"
+      [disabled]="showForm()"
+    >
+      ➕ Nova Lista
+    </button>
+  </div>
+
+  @if (showForm()) {
+    <div class="list-manager__form">
+      <app-add-list-form
+        [editMode]="editingList() !== null"
+        [initialName]="editingList()?.name || ''"
+        [initialDescription]="editingList()?.description || ''"
+        (listCreated)="onCreateList($event)"
+        (listUpdated)="onUpdateList($event)"
+        (cancelled)="onCancelForm()"
+      />
+    </div>
+  }
+
+  @if (lists().length > 0) {
+    <div class="list-manager__grid">
+      @for (list of lists(); track list.id) {
+        <app-list-item
+          [list]="list"
+          (edit)="onEditList($event)"
+          (delete)="onDeleteList($event)"
+          (view)="onViewList($event)"
+        />
+      }
+    </div>
+  } @else {
+    <div class="list-manager__empty">
+      <div class="empty-state">
+        <span class="empty-state__icon">📋</span>
+        <h3 class="empty-state__title">Nenhuma lista criada</h3>
+        <p class="empty-state__description">
+          Crie sua primeira lista personalizada de personagens!
+        </p>
+      </div>
+    </div>
+  }
+</div>

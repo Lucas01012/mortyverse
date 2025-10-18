@@ -27,10 +27,10 @@
   <section class="character-explorer__results">
     <div class="container">
       
-      @if (!isLoading() && filteredCharacters().length > 0) {
+      @if (!isLoading() && allCharacters().length > 0) {
         <div class="character-explorer__info">
           <p class="character-explorer__count">
-            Encontrados <strong>{{ filteredCharacters().length }}</strong> personagens
+            Mostrando <strong>{{ allCharacters().length }}</strong> personagens
           </p>
         </div>
       }
@@ -42,7 +42,7 @@
         (addToList)="onAddToList($event)"
       />
 
-      @if (!isLoading() && filteredCharacters().length > 0) {
+      @if (!isLoading() && allCharacters().length > 0) {
         <div class="character-explorer__pagination">
           <app-pagination 
             [currentPage]="currentPage()"
@@ -59,7 +59,7 @@
     [isOpen]="isModalOpen()"
     (close)="onCloseModal()"
   >
-    <span modalTitle>{{ selectedCharacter()?.name }}</span>
+    <span modalTitle>{{ (selectedCharacter()?.name || '') | truncate:30 }}</span>
     
     @if (selectedCharacter()) {
       <div class="character-detail">
@@ -81,11 +81,11 @@
           </div>
           <div class="character-detail__row">
             <span class="character-detail__label">Origem:</span>
-            <span class="character-detail__value">{{ selectedCharacter()!.origin.name }}</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.origin.name | truncate:40:true }}</span>
           </div>
           <div class="character-detail__row">
             <span class="character-detail__label">Localização:</span>
-            <span class="character-detail__value">{{ selectedCharacter()!.location.name }}</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.location.name | truncate:40:true }}</span>
           </div>
         </div>
       </div>

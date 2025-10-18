@@ -51,17 +51,15 @@ export class CharacterExplorerPage implements OnInit {
       next: (response) => {
         this.allCharacters.set(response.results);
         this.totalPages.set(response.info.pages);
-        this.isLoading.set(false);
-        
-        // Scroll para o topo DEPOIS da renderização (só no browser)
-        if (this.isBrowser) {
-          // Duplo requestAnimationFrame garante que o DOM foi completamente renderizado
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              document.documentElement.scrollTop = 0;
-            });
-          });
-        }
+        setTimeout(() => {
+          this.isLoading.set(false);
+          
+          if (this.isBrowser) {
+            setTimeout(() => {
+              window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+            },);
+          }
+        }, 200);
       },
       error: (error) => {
         console.error('Erro ao carregar personagens:', error);

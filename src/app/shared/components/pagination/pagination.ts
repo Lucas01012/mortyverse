@@ -42,8 +42,12 @@ export class Pagination {
     return pages;
   });
 
-  protected onPageChange(page: number): void {
+  protected onPageChange(page: number, event?: Event): void {
     if (page >= 1 && page <= this.totalPages() && page !== this.currentPage()) {
+      // Remove foco do botão para evitar que o scroll vá até ele
+      if (event && event.target instanceof HTMLElement) {
+        event.target.blur();
+      }
       this.pageChange.emit(page);
     }
   }

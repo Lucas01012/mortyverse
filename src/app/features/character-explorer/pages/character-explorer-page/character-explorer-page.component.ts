@@ -5,13 +5,12 @@ import { ApiService } from '../../../../core/services/api.service';
 import { SearchBar } from '../../components/search-bar/search-bar.component';
 import { CharacterList } from '../../components/character-list/character-list.component';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
-import { Modal } from '../../../../shared/components/modal/modal';
-import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
+import { CharacterDetailModal } from '../../../../shared/components/character-detail-modal/character-detail-modal';
 import { AddToListModal } from '../../../../shared/components/add-to-list-modal/add-to-list-modal';
 
 @Component({
   selector: 'app-character-explorer-page',
-  imports: [SearchBar, CharacterList, Pagination, Modal, TruncatePipe, AddToListModal],
+  imports: [SearchBar, CharacterList, Pagination, CharacterDetailModal, AddToListModal],
   templateUrl: './character-explorer-page.component.html',
   styleUrl: './character-explorer-page.component.scss'
 })

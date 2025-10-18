@@ -9,11 +9,11 @@ import { ApiService } from '../../../core/services/api.service';
 import { AddListForm } from '../components/add-list-form/add-list-form';
 import { Modal } from '../../../shared/components/modal/modal';
 import { CharacterCard } from '../../character-explorer/components/character-card/character-card.component';
-import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
+import { CharacterDetailModal } from '../../../shared/components/character-detail-modal/character-detail-modal';
 
 @Component({
   selector: 'app-list-detail-page',
-  imports: [RouterLink, AddListForm, Modal, CharacterCard, FormsModule, TruncatePipe],
+  imports: [RouterLink, AddListForm, Modal, CharacterCard, FormsModule, CharacterDetailModal],
   templateUrl: './list-detail-page.component.html',
   styleUrl: './list-detail-page.component.scss'
 })

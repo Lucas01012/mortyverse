@@ -55,48 +55,11 @@
     </div>
   </section>
 
-  <app-modal 
+  <app-character-detail-modal
     [isOpen]="isModalOpen()"
+    [character]="selectedCharacter()"
     (close)="onCloseModal()"
-  >
-    <span modalTitle>{{ (selectedCharacter()?.name || '') | truncate:30 }}</span>
-    
-    @if (selectedCharacter()) {
-      <div class="character-detail">
-        <div class="character-detail__image">
-          <img [src]="selectedCharacter()!.image" [alt]="selectedCharacter()!.name" />
-        </div>
-        <div class="character-detail__info">
-          <div class="character-detail__row">
-            <span class="character-detail__label">Status:</span>
-            <span class="character-detail__value">{{ selectedCharacter()!.status }}</span>
-          </div>
-          <div class="character-detail__row">
-            <span class="character-detail__label">Espécie:</span>
-            <span class="character-detail__value">{{ selectedCharacter()!.species }}</span>
-          </div>
-          <div class="character-detail__row">
-            <span class="character-detail__label">Gênero:</span>
-            <span class="character-detail__value">{{ selectedCharacter()!.gender }}</span>
-          </div>
-          <div class="character-detail__row">
-            <span class="character-detail__label">Origem:</span>
-            <span class="character-detail__value">{{ selectedCharacter()!.origin.name | truncate:40:true }}</span>
-          </div>
-          <div class="character-detail__row">
-            <span class="character-detail__label">Localização:</span>
-            <span class="character-detail__value">{{ selectedCharacter()!.location.name | truncate:40:true }}</span>
-          </div>
-        </div>
-      </div>
-    }
-
-    <div modalFooter>
-      <button class="btn btn-primary" (click)="onCloseModal()">
-        Fechar
-      </button>
-    </div>
-  </app-modal>
+  />
 
   @if (characterToAdd()) {
     <app-add-to-list-modal

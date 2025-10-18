@@ -1,0 +1,231 @@
+.question-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.5s ease-out;
+
+  &__image-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    .character-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: blur(15px);
+      transition: filter 0.5s ease;
+
+      &.revealed {
+        filter: blur(0);
+      }
+    }
+
+    .blur-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.1);
+      pointer-events: none;
+    }
+  }
+
+  &__details {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  &__options {
+    margin-top: var(--spacing-xl);
+  }
+}
+
+.details-title,
+.options-title {
+  font-size: var(--font-size-lg);
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+  text-align: center;
+}
+
+.details-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.detail-item {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--primary-green);
+}
+
+.detail-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 100px;
+}
+
+.detail-value {
+  color: var(--text-primary);
+  font-weight: 500;
+  flex: 1;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
+.option {
+  padding: var(--spacing-lg);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+
+  &:hover:not(:disabled) {
+    background: var(--bg-hover);
+    border-color: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 255, 159, 0.2);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &--correct {
+    background: rgba(0, 255, 159, 0.2);
+    border-color: var(--primary-green);
+    color: var(--primary-green);
+    animation: pulse 0.5s ease;
+  }
+
+  &--incorrect {
+    background: rgba(255, 59, 48, 0.2);
+    border-color: #ff3b30;
+    color: #ff3b30;
+    animation: shake 0.5s ease;
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.feedback {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  animation: fadeIn 0.5s ease;
+
+  &.correct {
+    background: rgba(0, 255, 159, 0.1);
+    border: 2px solid var(--primary-green);
+    color: var(--primary-green);
+  }
+
+  &:not(.correct) {
+    background: rgba(255, 59, 48, 0.1);
+    border: 2px solid #ff3b30;
+    color: #ff3b30;
+  }
+}
+
+.feedback-icon {
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .question-card {
+    padding: var(--spacing-lg);
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .detail-label {
+    min-width: auto;
+  }
+
+  .feedback {
+    flex-direction: column;
+    text-align: center;
+  }
+}

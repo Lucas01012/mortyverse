@@ -1,0 +1,59 @@
+<div class="guess-quiz-page">
+  <div class="guess-quiz-page__container">
+    <!-- Loading State -->
+    @if (isLoading()) {
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Preparando o quiz...</p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (errorMessage() && !isLoading()) {
+      <div class="error-message">
+        <p>{{ errorMessage() }}</p>
+        <button class="btn btn--primary" (click)="startQuiz()">
+          Tentar Novamente
+        </button>
+      </div>
+    }
+
+    <!-- Quiz Header -->
+    @if (!isLoading() && !errorMessage() && !quizFinished()) {
+      <div class="quiz-header">
+        <h1 class="quiz-header__title">Adivinhe o Personagem</h1>
+        <div class="quiz-header__info">
+          <div class="quiz-header__score">
+            <span class="label">Pontuação:</span>
+            <span class="value">{{ score() }} / {{ questions().length }}</span>
+          </div>
+          <div class="quiz-header__question">
+            <span class="label">Questão:</span>
+            <span class="value">{{ currentQuestionIndex() + 1 }} / {{ questions().length }}</span>
+          </div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-bar__fill" [style.width.%]="progress()"></div>
+        </div>
+      </div>
+    }
+
+    <!-- Current Question -->
+    @if (currentQuestion() && !quizFinished()) {
+      <app-question-card
+        [question]="currentQuestion()!"
+        (answerSelected)="onAnswerSelected($event)"
+      />
+    }
+
+    <!-- Quiz Result -->
+    @if (quizFinished()) {
+      <app-guess-quiz-result
+        [score]="score()"
+        [totalQuestions]="questions().length"
+        [questions]="questions()"
+        (tryAgain)="onTryAgain()"
+      />
+    }
+  </div>
+</div>

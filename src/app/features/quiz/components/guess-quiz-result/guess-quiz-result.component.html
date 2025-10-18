@@ -1,0 +1,70 @@
+<div class="guess-quiz-result">
+  <div class="result-header">
+    <div class="result-emoji">{{ performanceEmoji() }}</div>
+    <h2 class="result-title">Quiz Finalizado!</h2>
+    <p class="result-message">{{ performanceMessage() }}</p>
+  </div>
+
+  <div class="result-score">
+    <div class="score-circle">
+      <svg class="score-svg" viewBox="0 0 200 200">
+        <circle
+          class="score-bg"
+          cx="100"
+          cy="100"
+          r="90"
+        />
+        <circle
+          class="score-progress"
+          cx="100"
+          cy="100"
+          r="90"
+          [style.strokeDashoffset]="565 - (565 * percentage() / 100)"
+        />
+      </svg>
+      <div class="score-content">
+        <div class="score-value">{{ score() }}/{{ totalQuestions() }}</div>
+        <div class="score-percentage">{{ percentage() }}%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-details">
+    <h3 class="details-title">Resumo das Respostas</h3>
+    <div class="details-grid">
+      @for (question of questions(); track question.character.id; let i = $index) {
+        <div class="question-summary" [class.correct]="question.isCorrect">
+          <div class="summary-header">
+            <span class="summary-number">Questão {{ i + 1 }}</span>
+            <span class="summary-icon">
+              {{ question.isCorrect ? '✓' : '✗' }}
+            </span>
+          </div>
+          <div class="summary-content">
+            <img 
+              [src]="question.character.image" 
+              [alt]="question.character.name"
+              class="summary-image"
+            />
+            <div class="summary-info">
+              <div class="summary-correct">
+                <strong>Correto:</strong> {{ question.character.name }}
+              </div>
+              @if (!question.isCorrect) {
+                <div class="summary-selected">
+                  <strong>Você escolheu:</strong> {{ question.selectedAnswer?.name }}
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="result-actions">
+    <button class="btn btn--primary" (click)="onTryAgain()">
+      Jogar Novamente
+    </button>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="question-card">
+  <div class="question-card__image-container">
+    <img 
+      [src]="question().character.image" 
+      [alt]="'Personagem misterioso'"
+      [class.revealed]="question().answered"
+      class="character-image"
+    />
+    @if (!question().answered) {
+      <div class="blur-overlay"></div>
+    }
+  </div>
+
+  <div class="question-card__details">
+    <h3 class="details-title">Pistas sobre o personagem:</h3>
+    <div class="details-list">
+      <div class="detail-item">
+        <span class="detail-label">Status:</span>
+        <span class="detail-value">{{ question().character.status }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Espécie:</span>
+        <span class="detail-value">{{ question().character.species }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Gênero:</span>
+        <span class="detail-value">{{ question().character.gender }}</span>
+      </div>
+      @if (question().character.type) {
+        <div class="detail-item">
+          <span class="detail-label">Tipo:</span>
+          <span class="detail-value">{{ question().character.type }}</span>
+        </div>
+      }
+      <div class="detail-item">
+        <span class="detail-label">Origem:</span>
+        <span class="detail-value">{{ question().character.origin.name }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card__options">
+    <h3 class="options-title">Quem é este personagem?</h3>
+    <div class="options-grid">
+      @for (option of question().options; track option.id) {
+        <button
+          [class]="getOptionClass(option)"
+          (click)="onOptionClick(option)"
+          [disabled]="question().answered"
+        >
+          {{ option.name }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (question().answered) {
+    <div class="feedback" [class.correct]="question().isCorrect">
+      @if (question().isCorrect) {
+        <span class="feedback-icon">✓</span>
+        <span class="feedback-text">Correto! É {{ question().character.name }}!</span>
+      } @else {
+        <span class="feedback-icon">✗</span>
+        <span class="feedback-text">
+          Errado! O personagem correto era {{ question().character.name }}
+        </span>
+      }
+    </div>
+  }
+</div>

@@ -23,7 +23,13 @@ export const routes: Routes = [
     path: 'quiz',
     loadComponent: () => import('./features/quiz/pages/quiz-page.component')
       .then(m => m.QuizPage),
-    title: 'Quiz | Mortyverse'
+    title: 'Quiz de Personalidade | Mortyverse'
+  },
+  {
+    path: 'guess-quiz',
+    loadComponent: () => import('./features/quiz/pages/guess-quiz-page.component')
+      .then(m => m.GuessQuizPage),
+    title: 'Quiz de Adivinhação | Mortyverse'
   },
   {
     path: '**',

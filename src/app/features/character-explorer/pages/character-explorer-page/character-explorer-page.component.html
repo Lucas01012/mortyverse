@@ -1,1 +1,111 @@
-<p>character-explorer-page works!</p>
+<!-- ===================================
+     CHARACTER EXPLORER PAGE
+     =================================== -->
+<div class="character-explorer">
+
+  <!-- Hero Section -->
+  <section class="character-explorer__hero">
+    <div class="container">
+      <h1 class="character-explorer__title">
+        Explore o <span class="character-explorer__title-highlight">Multiverso</span>
+      </h1>
+      <p class="character-explorer__subtitle">
+        Descubra todos os personagens do universo de Rick and Morty
+      </p>
+    </div>
+  </section>
+
+  <!-- Search Section -->
+  <section class="character-explorer__search">
+    <div class="container">
+      <app-search-bar 
+        [searchTerm]="searchTerm()"
+        [statusFilter]="statusFilter()"
+        [genderFilter]="genderFilter()"
+        (searchChange)="onSearchChange($event)"
+        (statusChange)="onStatusChange($event)"
+        (genderChange)="onGenderChange($event)"
+      />
+    </div>
+  </section>
+
+  <!-- Results Section -->
+  <section class="character-explorer__results">
+    <div class="container">
+      
+      <!-- Results Info -->
+      @if (!isLoading() && filteredCharacters().length > 0) {
+        <div class="character-explorer__info">
+          <p class="character-explorer__count">
+            Encontrados <strong>{{ filteredCharacters().length }}</strong> personagens
+          </p>
+        </div>
+      }
+
+      <!-- Character List -->
+      <app-character-list 
+        [characters]="paginatedCharacters()"
+        [isLoading]="isLoading()"
+        (viewDetails)="onViewDetails($event)"
+        (addToList)="onAddToList($event)"
+      />
+
+      <!-- Pagination -->
+      @if (!isLoading() && filteredCharacters().length > 0) {
+        <div class="character-explorer__pagination">
+          <app-pagination 
+            [currentPage]="currentPage()"
+            [totalPages]="totalPages()"
+            (pageChange)="onPageChange($event)"
+          />
+        </div>
+      }
+
+    </div>
+  </section>
+
+  <!-- Character Detail Modal -->
+  <app-modal 
+    [isOpen]="isModalOpen()"
+    (close)="onCloseModal()"
+  >
+    <span modalTitle>{{ selectedCharacter()?.name }}</span>
+    
+    @if (selectedCharacter()) {
+      <div class="character-detail">
+        <div class="character-detail__image">
+          <img [src]="selectedCharacter()!.image" [alt]="selectedCharacter()!.name" />
+        </div>
+        <div class="character-detail__info">
+          <div class="character-detail__row">
+            <span class="character-detail__label">Status:</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.status }}</span>
+          </div>
+          <div class="character-detail__row">
+            <span class="character-detail__label">Espécie:</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.species }}</span>
+          </div>
+          <div class="character-detail__row">
+            <span class="character-detail__label">Gênero:</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.gender }}</span>
+          </div>
+          <div class="character-detail__row">
+            <span class="character-detail__label">Origem:</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.origin.name }}</span>
+          </div>
+          <div class="character-detail__row">
+            <span class="character-detail__label">Localização:</span>
+            <span class="character-detail__value">{{ selectedCharacter()!.location.name }}</span>
+          </div>
+        </div>
+      </div>
+    }
+
+    <div modalFooter>
+      <button class="btn btn-primary" (click)="onCloseModal()">
+        Fechar
+      </button>
+    </div>
+  </app-modal>
+
+</div>

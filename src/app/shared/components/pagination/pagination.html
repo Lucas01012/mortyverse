@@ -1,1 +1,76 @@
-<p>pagination works!</p>
+<!-- ===================================
+     PAGINATION COMPONENT
+     =================================== -->
+<nav class="pagination" aria-label="Paginação">
+  
+  <div class="pagination__info">
+    <span class="pagination__text">
+      Página <strong>{{ currentPage() }}</strong> de <strong>{{ totalPages() }}</strong>
+    </span>
+  </div>
+
+  <div class="pagination__controls">
+    
+    <!-- First Page -->
+    <button 
+      class="pagination__btn pagination__btn--first"
+      [disabled]="currentPage() === 1"
+      (click)="onPageChange(1)"
+      aria-label="Primeira página"
+      type="button"
+    >
+      ⏮
+    </button>
+
+    <!-- Previous Page -->
+    <button 
+      class="pagination__btn pagination__btn--prev"
+      [disabled]="!hasPrev()"
+      (click)="onPageChange(currentPage() - 1)"
+      aria-label="Página anterior"
+      type="button"
+    >
+      ◀
+    </button>
+
+    <!-- Page Numbers -->
+    <div class="pagination__pages">
+      @for (page of visiblePages(); track page) {
+        <button 
+          class="pagination__btn pagination__btn--page"
+          [class.pagination__btn--active]="page === currentPage()"
+          (click)="onPageChange(page)"
+          [attr.aria-label]="'Página ' + page"
+          [attr.aria-current]="page === currentPage() ? 'page' : null"
+          type="button"
+        >
+          {{ page }}
+        </button>
+      }
+    </div>
+
+    <!-- Next Page -->
+    <button 
+      class="pagination__btn pagination__btn--next"
+      [disabled]="!hasNext()"
+      (click)="onPageChange(currentPage() + 1)"
+      aria-label="Próxima página"
+      type="button"
+    >
+      ▶
+    </button>
+
+    <!-- Last Page -->
+    <button 
+      class="pagination__btn pagination__btn--last"
+      [disabled]="currentPage() === totalPages()"
+      (click)="onPageChange(totalPages())"
+      aria-label="Última página"
+      type="button"
+    >
+      ⏭
+    </button>
+
+  </div>
+
+</nav>

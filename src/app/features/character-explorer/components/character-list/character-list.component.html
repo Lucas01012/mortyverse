@@ -1,1 +1,38 @@
-<p>character-list works!</p>
+<!-- ===================================
+     CHARACTER LIST COMPONENT
+     =================================== -->
+<div class="character-list">
+  
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="character-list__loading">
+      <div class="loading-spinner"></div>
+      <p>Carregando personagens...</p>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @else if (characters().length === 0) {
+    <div class="character-list__empty">
+      <div class="character-list__empty-icon">🔍</div>
+      <h3 class="character-list__empty-title">Nenhum personagem encontrado</h3>
+      <p class="character-list__empty-description">
+        Tente ajustar seus filtros de busca ou explore outros personagens.
+      </p>
+    </div>
+  }
+
+  <!-- Grid of Characters -->
+  @else {
+    <div class="character-list__grid">
+      @for (character of characters(); track character.id) {
+        <app-character-card 
+          [character]="character"
+          (viewDetails)="onViewDetails($event)"
+          (addToList)="onAddToList($event)"
+        />
+      }
+    </div>
+  }
+
+</div>

@@ -1,1 +1,59 @@
-<p>app-header works!</p>
+<!-- ===================================
+     HEADER COMPONENT
+     =================================== -->
+<header class="header">
+  <div class="container">
+    <div class="header__content">
+      
+      <!-- Logo -->
+      <a routerLink="/" class="header__logo">
+        <span class="header__logo-text">
+          <span class="header__logo-morty">MORTY</span><span class="header__logo-verse">VERSE</span>
+        </span>
+        <div class="header__logo-glow"></div>
+      </a>
+
+      <!-- Navigation -->
+      <nav class="header__nav">
+        <a routerLink="/" class="header__link" routerLinkActive="header__link--active" [routerLinkActiveOptions]="{exact: true}">
+          <span class="header__link-icon">🌌</span>
+          <span>Explorar</span>
+        </a>
+        <a routerLink="/my-lists" class="header__link" routerLinkActive="header__link--active">
+          <span class="header__link-icon">📋</span>
+          <span>Minhas Listas</span>
+        </a>
+        <a routerLink="/quiz" class="header__link" routerLinkActive="header__link--active">
+          <span class="header__link-icon">🎲</span>
+          <span>Quiz</span>
+        </a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button class="header__menu-btn" (click)="toggleMobileMenu()" [attr.aria-expanded]="isMobileMenuOpen()" aria-label="Toggle menu">
+        <span class="header__menu-icon"></span>
+        <span class="header__menu-icon"></span>
+        <span class="header__menu-icon"></span>
+      </button>
+
+    </div>
+
+    <!-- Mobile Navigation -->
+    @if (isMobileMenuOpen()) {
+      <nav class="header__mobile-nav">
+        <a routerLink="/" class="header__mobile-link" routerLinkActive="header__mobile-link--active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()">
+          <span class="header__link-icon">🌌</span>
+          <span>Explorar</span>
+        </a>
+        <a routerLink="/my-lists" class="header__mobile-link" routerLinkActive="header__mobile-link--active" (click)="closeMobileMenu()">
+          <span class="header__link-icon">📋</span>
+          <span>Minhas Listas</span>
+        </a>
+        <a routerLink="/quiz" class="header__mobile-link" routerLinkActive="header__mobile-link--active" (click)="closeMobileMenu()">
+          <span class="header__link-icon">🎲</span>
+          <span>Quiz</span>
+        </a>
+      </nav>
+    }
+  </div>
+</header>

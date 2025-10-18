@@ -1,0 +1,16 @@
+/* ===================================
+   APP COMPONENT STYLES
+   =================================== */
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  padding-top: var(--spacing-2xl);
+  padding-bottom: var(--spacing-2xl);
+}

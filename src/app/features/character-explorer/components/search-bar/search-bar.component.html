@@ -1,1 +1,65 @@
-<p>search-bar works!</p>
+<!-- ===================================
+     SEARCH BAR COMPONENT
+     =================================== -->
+<div class="search-bar">
+  
+  <!-- Search Input -->
+  <div class="search-bar__input-wrapper">
+    <span class="search-bar__icon">🔍</span>
+    <input 
+      type="text"
+      class="search-bar__input"
+      placeholder="Buscar personagens por nome..."
+      [value]="searchTerm()"
+      (input)="onSearchChange($event)"
+      aria-label="Buscar personagens"
+    />
+    @if (searchTerm()) {
+      <button 
+        class="search-bar__clear"
+        (click)="onClear()"
+        aria-label="Limpar busca"
+        type="button"
+      >
+        ✕
+      </button>
+    }
+  </div>
+
+  <!-- Filters -->
+  <div class="search-bar__filters">
+    
+    <!-- Status Filter -->
+    <div class="search-bar__filter">
+      <label class="search-bar__filter-label">Status:</label>
+      <select 
+        class="search-bar__select"
+        [value]="statusFilter()"
+        (change)="onStatusChange($event)"
+      >
+        <option value="">Todos</option>
+        <option value="alive">Vivo</option>
+        <option value="dead">Morto</option>
+        <option value="unknown">Desconhecido</option>
+      </select>
+    </div>
+
+    <!-- Gender Filter -->
+    <div class="search-bar__filter">
+      <label class="search-bar__filter-label">Gênero:</label>
+      <select 
+        class="search-bar__select"
+        [value]="genderFilter()"
+        (change)="onGenderChange($event)"
+      >
+        <option value="">Todos</option>
+        <option value="male">Masculino</option>
+        <option value="female">Feminino</option>
+        <option value="genderless">Sem Gênero</option>
+        <option value="unknown">Desconhecido</option>
+      </select>
+    </div>
+
+  </div>
+
+</div>

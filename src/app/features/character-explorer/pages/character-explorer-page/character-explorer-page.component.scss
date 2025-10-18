@@ -1,0 +1,187 @@
+/* ===================================
+   CHARACTER EXPLORER PAGE STYLES
+   =================================== */
+
+.character-explorer {
+  min-height: 100vh;
+
+  /* ===================================
+     HERO SECTION
+     =================================== */
+  &__hero {
+    padding: var(--spacing-3xl) 0 var(--spacing-2xl);
+    text-align: center;
+    background: linear-gradient(
+      180deg,
+      var(--bg-secondary) 0%,
+      var(--bg-primary) 100%
+    );
+    border-bottom: 2px solid var(--gray-700);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200%;
+      height: 100%;
+      background: radial-gradient(
+        circle at center,
+        rgba(0, 255, 159, 0.1) 0%,
+        transparent 70%
+      );
+      animation: pulse 4s ease-in-out infinite;
+    }
+  }
+
+  &__title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0 0 var(--spacing-md);
+    position: relative;
+    z-index: 2;
+  }
+
+  &__title-highlight {
+    color: var(--primary-green);
+    text-shadow: 0 0 30px rgba(0, 255, 159, 0.6);
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  &__subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ===================================
+     SEARCH SECTION
+     =================================== */
+  &__search {
+    padding: var(--spacing-2xl) 0;
+    background: var(--bg-primary);
+  }
+
+  /* ===================================
+     RESULTS SECTION
+     =================================== */
+  &__results {
+    padding: var(--spacing-xl) 0 var(--spacing-3xl);
+    background: var(--bg-primary);
+  }
+
+  &__info {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--bg-secondary);
+    border-left: 4px solid var(--primary-green);
+    border-radius: var(--radius-md);
+  }
+
+  &__count {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+
+    strong {
+      color: var(--primary-green);
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+  }
+
+  &__pagination {
+    margin-top: var(--spacing-2xl);
+  }
+}
+
+/* ===================================
+   CHARACTER DETAIL (MODAL CONTENT)
+   =================================== */
+.character-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  &__image {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 2px solid var(--primary-green);
+    box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--primary-green);
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &__value {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+}
+
+/* ===================================
+   ANIMATIONS
+   =================================== */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 20px rgba(0, 255, 159, 0.4);
+  }
+  to {
+    text-shadow: 0 0 40px rgba(0, 255, 159, 0.8);
+  }
+}

@@ -4,8 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-app-footer',
   imports: [],
   templateUrl: './app-footer.html',
-  styles: ``
+  styleUrl: './app-footer.scss'
 })
 export class AppFooter {
-
+  protected readonly currentYear = new Date().getFullYear();
 }

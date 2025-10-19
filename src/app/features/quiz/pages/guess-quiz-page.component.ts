@@ -23,12 +23,10 @@ export interface QuizQuestion {
 export class GuessQuizPage {
   private apiService = inject(ApiService);
 
-  // Configuração do quiz
   private readonly TOTAL_QUESTIONS = 10;
   private readonly OPTIONS_PER_QUESTION = 4;
-  private readonly MAX_CHARACTERS_IN_API = 826; // Total de personagens na API
+  private readonly MAX_CHARACTERS_IN_API = 826;
 
-  // State
   questions = signal<QuizQuestion[]>([]);
   currentQuestionIndex = signal<number>(0);
   score = signal<number>(0);
@@ -36,7 +34,6 @@ export class GuessQuizPage {
   errorMessage = signal<string>('');
   quizFinished = signal<boolean>(false);
 
-  // Computed
   currentQuestion = computed(() => {
     const questions = this.questions();
     const index = this.currentQuestionIndex();

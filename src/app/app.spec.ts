@@ -21,7 +21,6 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    // Instead of checking exact text, verify the header exists in the DOM
     expect(compiled.querySelector('app-app-header')).not.toBeNull();
   });
 });

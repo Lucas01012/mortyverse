@@ -119,7 +119,7 @@ describe('Pagination', () => {
 
     it('should blur button after click', () => {
       const button = document.createElement('button');
-      const mockEvent = { target: button } as unknown as Event;
+      const mockEvent = { target: button, preventDefault: () => {} } as unknown as Event;
       
       spyOn(button, 'blur');
       

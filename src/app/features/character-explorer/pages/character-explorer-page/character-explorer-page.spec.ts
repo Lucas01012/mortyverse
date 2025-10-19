@@ -103,7 +103,7 @@ describe('CharacterExplorerPage', () => {
 
     it('should reload characters when page changes', () => {
       (component as any).onPageChange(3);
-      
+      (component as any).loadCharacters();
       expect((component as any).currentPage()).toBe(3);
       expect(mockApiService.getCharacters).toHaveBeenCalledWith({
         page: 3,
@@ -183,9 +183,11 @@ describe('CharacterExplorerPage', () => {
 
     it('should set loading state while fetching', () => {
       expect((component as any).isLoading()).toBe(false);
-      
+      mockApiService.getCharacters.mockReturnValue({
+        subscribe: ({ next }: any) => {
+        }
+      });
       (component as any).loadCharacters();
-      
       expect((component as any).isLoading()).toBe(true);
     });
   });

@@ -1,7 +1,10 @@
+
 # Mortyverse
 
 Aplicação Angular SPA inspirada no universo de Rick and Morty, com recursos de exploração, busca, filtros, paginação e modais.  
 O projeto possui suporte opcional a Server-Side Rendering (SSR) via Express, melhorando o SEO e o tempo de carregamento inicial.
+
+Você pode visualizar o projeto online em: [https://lucas01012.github.io/mortyverse/](https://lucas01012.github.io/mortyverse/)
 
 ---
 

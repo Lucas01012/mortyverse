@@ -12,7 +12,7 @@ Você pode visualizar o projeto online em: [https://lucas01012.github.io/mortyve
 
 | Tecnologia             | Versão         | Descrição                              |
 |------------------------|---------------|----------------------------------------|
-| **Angular**            | 20.3.x        | Framework principal                    |
+| **Angular**            | 20.3.6        | Framework principal                    |
 | **Angular CLI**        | 20.3.6        | Ferramentas de build e desenvolvimento |
 | **Jest**               | 29.7.0        | Test runner e assertions               |
 | **jest-preset-angular**| 14.1.0        | Integração entre Angular e Jest        |

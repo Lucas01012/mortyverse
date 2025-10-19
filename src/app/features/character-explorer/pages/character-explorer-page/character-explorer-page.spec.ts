@@ -25,7 +25,6 @@ describe('CharacterExplorerPage', () => {
       getCharacters: jest.fn().mockReturnValue(of(mockResponse))
     };
 
-    // Mock window.scrollTo
     Object.defineProperty(window, 'scrollTo', {
       value: jest.fn(),
       writable: true
@@ -193,12 +192,10 @@ describe('CharacterExplorerPage', () => {
 
   describe('browser-specific behavior', () => {
     it('should not scroll to top when not in browser', () => {
-      // Mock isBrowser as false
       Object.defineProperty(component, 'isBrowser', { get: () => false });
       
       fixture.detectChanges();
       
-      // Should not throw or call window.scrollTo
       expect(() => {
         (component as any).loadCharacters();
       }).not.toThrow();

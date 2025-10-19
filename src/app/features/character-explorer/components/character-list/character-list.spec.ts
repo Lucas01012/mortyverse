@@ -14,7 +14,6 @@ describe('CharacterList', () => {
 
     fixture = TestBed.createComponent(CharacterList);
     component = fixture.componentInstance;
-    // provide minimal required input (handle signal-style inputs)
     const assignSignal = (sigName: string, val: any) => {
       const target = (component as any)[sigName];
       if (typeof target === 'function') {

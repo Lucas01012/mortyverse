@@ -1,4 +1,4 @@
-import { Component, computed, signal, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { Component, computed, signal, OnInit, PLATFORM_ID, inject, afterNextRender } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Character } from '../../../../core/models/character.model';
 import { ApiService } from '../../../../core/services/api.service';
@@ -17,6 +17,7 @@ import { AddToListModal } from '../../../../shared/components/add-to-list-modal/
 export class CharacterExplorerPage implements OnInit {
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+
   protected isLoading = signal(false);
   protected searchTerm = signal('');
   protected statusFilter = signal('');
@@ -33,7 +34,11 @@ export class CharacterExplorerPage implements OnInit {
   protected allCharacters = signal<Character[]>([]);
   protected totalPages = signal(1);
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) {
+    afterNextRender(() => {
+      window.scrollTo(0, 0);
+    });
+  }
 
   ngOnInit(): void {
     this.loadCharacters();
@@ -41,7 +46,7 @@ export class CharacterExplorerPage implements OnInit {
 
   protected loadCharacters(): void {
     this.isLoading.set(true);
-    
+
     this.apiService.getCharacters({
       page: this.currentPage(),
       name: this.searchTerm() || undefined,
@@ -51,15 +56,7 @@ export class CharacterExplorerPage implements OnInit {
       next: (response) => {
         this.allCharacters.set(response.results);
         this.totalPages.set(response.info.pages);
-        setTimeout(() => {
-          this.isLoading.set(false);
-          
-          if (this.isBrowser) {
-            setTimeout(() => {
-              window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-            },);
-          }
-        }, 200);
+        this.isLoading.set(false);
       },
       error: (error) => {
         console.error('Erro ao carregar personagens:', error);
@@ -76,23 +73,58 @@ export class CharacterExplorerPage implements OnInit {
     this.searchTerm.set(term);
     this.currentPage.set(1);
     this.loadCharacters();
+    this.scrollToTop();
   }
 
   protected onStatusChange(status: string): void {
     this.statusFilter.set(status);
     this.currentPage.set(1);
     this.loadCharacters();
+    this.scrollToTop();
   }
 
   protected onGenderChange(gender: string): void {
     this.genderFilter.set(gender);
     this.currentPage.set(1);
     this.loadCharacters();
+    this.scrollToTop();
   }
 
   protected onPageChange(page: number): void {
+    this.scrollToTop();
+    
     this.currentPage.set(page);
-    this.loadCharacters();
+    
+    setTimeout(() => {
+      this.isLoading.set(true);
+
+      this.apiService.getCharacters({
+        page,
+        name: this.searchTerm() || undefined,
+        status: this.statusFilter() || undefined,
+        gender: this.genderFilter() || undefined
+      }).subscribe({
+        next: (response) => {
+          this.allCharacters.set(response.results);
+          this.totalPages.set(response.info.pages);
+          this.isLoading.set(false);
+        },
+        error: (error) => {
+          console.error('Erro ao carregar personagens:', error);
+          this.allCharacters.set([]);
+          this.totalPages.set(1);
+          this.isLoading.set(false);
+        }
+      });
+    }, 100);
+  }
+
+  private scrollToTop(): void {
+    if (!this.isBrowser) return;
+
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
   }
 
   protected onViewDetails(character: Character): void {

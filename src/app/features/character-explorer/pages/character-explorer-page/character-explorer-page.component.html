@@ -1,3 +1,10 @@
+
+@if (isLoading()) {
+  <div class="character-explorer__loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+}
+
 <div class="character-explorer">
 
   <section class="character-explorer__hero">
@@ -42,15 +49,13 @@
         (addToList)="onAddToList($event)"
       />
 
-      @if (!isLoading() && allCharacters().length > 0) {
-        <div class="character-explorer__pagination">
-          <app-pagination 
-            [currentPage]="currentPage()"
-            [totalPages]="totalPages()"
-            (pageChange)="onPageChange($event)"
-          />
-        </div>
-      }
+      <div class="character-explorer__pagination">
+        <app-pagination 
+          [currentPage]="currentPage()"
+          [totalPages]="totalPages()"
+          (pageChange)="onPageChange($event)"
+        />
+      </div>
 
     </div>
   </section>

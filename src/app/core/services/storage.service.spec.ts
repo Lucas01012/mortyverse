@@ -45,18 +45,15 @@ describe('StorageService (unit)', () => {
   });
 
   it('getItem should return null for invalid JSON', () => {
-    // simulate malformed value in localStorage
     (store as any)['bad'] = 'not-json';
     expect(svc.getItem('bad')).toBeNull();
   });
 
   it('should be no-op on server platform', () => {
     TestBed.resetTestingModule();
-    // clear any recorded calls on localStorage spies
     jest.clearAllMocks();
     TestBed.configureTestingModule({ providers: [StorageService, { provide: PLATFORM_ID, useValue: 'server' }] });
     const serverSvc = TestBed.inject(StorageService);
-    // force not browser just in case
     (serverSvc as any).isBrowser = false;
 
     serverSvc.setItem('s', 1);

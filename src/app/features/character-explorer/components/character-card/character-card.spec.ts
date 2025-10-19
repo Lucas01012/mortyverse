@@ -14,7 +14,6 @@ describe('CharacterCard', () => {
 
     fixture = TestBed.createComponent(CharacterCard);
     component = fixture.componentInstance;
-    // minimal required input (handle signal input if present)
     const mockChar = { id: 1, name: 'Rick', status: 'Alive', species: 'Human', image: '' };
     const assignSignal = (sigName: string, val: any) => {
       const target = (component as any)[sigName];

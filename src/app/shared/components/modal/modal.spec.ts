@@ -14,7 +14,6 @@ describe('Modal', () => {
 
     fixture = TestBed.createComponent(Modal);
     component = fixture.componentInstance;
-    // required inputs (component may use callable signals)
     const assignSignal = (sigName: string, val: any) => {
       const target = (component as any)[sigName];
       if (typeof target === 'function') {
@@ -53,7 +52,6 @@ describe('Modal', () => {
       const closeSpy = jest.fn();
       (component as any).close.subscribe(closeSpy);
       
-      // Set closeOnBackdrop to true (default)
       const assignSignal = (sigName: string, val: any) => {
         const target = (component as any)[sigName];
         if (typeof target === 'function') {
@@ -78,7 +76,6 @@ describe('Modal', () => {
       const closeSpy = jest.fn();
       (component as any).close.subscribe(closeSpy);
       
-      // Set closeOnBackdrop to false
       const assignSignal = (sigName: string, val: any) => {
         const target = (component as any)[sigName];
         if (typeof target === 'function') {

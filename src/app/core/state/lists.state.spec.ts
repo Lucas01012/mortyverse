@@ -26,7 +26,6 @@ describe('ListsState', () => {
   });
 
   beforeAll(() => {
-    // crypto.randomUUID may not be available in the test environment
     if (!(global as any).crypto) {
       (global as any).crypto = {};
     }
@@ -64,7 +63,6 @@ describe('ListsState', () => {
     const char = { id: 123, name: 'Rick' } as any;
     const added = state.addCharacterToList(created.id, char);
     expect(added).toBe(true);
-    // adding again should be a no-op
     const addedAgain = state.addCharacterToList(created.id, char);
     expect(addedAgain).toBe(true);
     const removed = state.removeCharacterFromList(created.id, 123);

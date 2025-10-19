@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ApiService } from './api.service';
+import { CharacterResponse, CharacterFilters } from '../models/character.model';
 
 describe('ApiService', () => {
   let service: ApiService;
@@ -30,10 +31,6 @@ describe('ApiService', () => {
     req.flush({ info: {}, results: [] });
   });
 });
-import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ApiService } from './api.service';
-import { CharacterResponse, CharacterFilters } from '../models/character.model';
 
 describe('ApiService', () => {
   let service: ApiService;

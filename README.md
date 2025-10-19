@@ -14,8 +14,8 @@ Você pode visualizar o projeto online em: [https://lucas01012.github.io/mortyve
 |------------------------|---------------|----------------------------------------|
 | **Angular**            | 20.3.x        | Framework principal                    |
 | **Angular CLI**        | 20.3.6        | Ferramentas de build e desenvolvimento |
-| **Jest**               | 30.2.0        | Test runner e assertions               |
-| **jest-preset-angular**| 15.0.3        | Integração entre Angular e Jest        |
+| **Jest**               | 29.7.0        | Test runner e assertions               |
+| **jest-preset-angular**| 14.1.0        | Integração entre Angular e Jest        |
 | **TypeScript**         | ~5.9.2        | Superset de JavaScript                 |
 | **Express**            | 5.1.0         | Servidor SSR                           |
 | **Node.js**            | v18+ (recomendado) | Ambiente de execução              |

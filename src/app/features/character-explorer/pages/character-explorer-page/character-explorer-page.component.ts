@@ -56,7 +56,7 @@ export class CharacterExplorerPage implements OnInit {
       next: (response) => {
         this.allCharacters.set(response.results);
         this.totalPages.set(response.info.pages);
-        this.isLoading.set(false);
+        setTimeout(() => this.isLoading.set(false), 0);
       },
       error: (error) => {
         console.error('Erro ao carregar personagens:', error);
@@ -92,31 +92,9 @@ export class CharacterExplorerPage implements OnInit {
 
   protected onPageChange(page: number): void {
     this.scrollToTop();
-    
-    this.currentPage.set(page);
-    
-    setTimeout(() => {
-      this.isLoading.set(true);
 
-      this.apiService.getCharacters({
-        page,
-        name: this.searchTerm() || undefined,
-        status: this.statusFilter() || undefined,
-        gender: this.genderFilter() || undefined
-      }).subscribe({
-        next: (response) => {
-          this.allCharacters.set(response.results);
-          this.totalPages.set(response.info.pages);
-          this.isLoading.set(false);
-        },
-        error: (error) => {
-          console.error('Erro ao carregar personagens:', error);
-          this.allCharacters.set([]);
-          this.totalPages.set(1);
-          this.isLoading.set(false);
-        }
-      });
-    }, 100);
+    this.currentPage.set(page);
+    this.loadCharacters();
   }
 
   private scrollToTop(): void {

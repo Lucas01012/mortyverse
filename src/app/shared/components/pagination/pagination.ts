@@ -43,9 +43,14 @@ export class Pagination {
   });
 
   protected onPageChange(page: number, event?: Event): void {
-    event?.preventDefault();
-    if (event?.target instanceof HTMLElement) {
-      event.target.blur();
+    // Defensive: some tests provide a minimal mock event without preventDefault
+    if (event && typeof (event as any).preventDefault === 'function') {
+      (event as any).preventDefault();
+    }
+
+    const target = (event as any)?.target;
+    if (target && typeof target.blur === 'function') {
+      target.blur();
     }
     if (page >= 1 && page <= this.totalPages() && page !== this.currentPage()) {
       this.pageChange.emit(page);

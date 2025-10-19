@@ -23,7 +23,7 @@
         />
       </svg>
       <div class="score-content">
-        <div class="score-value">{{ score() }}/{{ totalQuestions() }}</div>
+  <div class="score-value">{{ score }}/{{ totalQuestions }}</div>
         <div class="score-percentage">{{ percentage() }}%</div>
       </div>
     </div>
@@ -32,7 +32,7 @@
   <div class="result-details">
     <h3 class="details-title">Resumo das Respostas</h3>
     <div class="details-grid">
-      @for (question of questions(); track question.character.id; let i = $index) {
+  @for (question of questions; track question.character.id; let i = $index) {
         <div class="question-summary" [class.correct]="question.isCorrect">
           <div class="summary-header">
             <span class="summary-number">Questão {{ i + 1 }}</span>

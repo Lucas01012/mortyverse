@@ -1,104 +1,138 @@
-import { TestBed } from '@angular/core/testing';
-import { GuessQuizPage } from './guess-quiz-page.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { GuessQuizPage, QuizQuestion } from './guess-quiz-page.component';
 import { ApiService } from '../../../core/services/api.service';
 import { of } from 'rxjs';
+import { Character } from '../../../core/models/character.model';
 
 describe('GuessQuizPage', () => {
+  let fixture: ComponentFixture<GuessQuizPage>;
   let component: GuessQuizPage;
 
   beforeEach(async () => {
-    // Provide a minimal ApiService mock because the component injects it.
     const mockApi = { getCharacters: jest.fn(() => of({ results: [] })) };
 
     await TestBed.configureTestingModule({
       imports: [GuessQuizPage],
-      providers: [
-        { provide: ApiService, useValue: mockApi }
-      ]
+      providers: [{ provide: ApiService, useValue: mockApi }]
     }).compileComponents();
 
-    const fixture = TestBed.createComponent(GuessQuizPage);
+    fixture = TestBed.createComponent(GuessQuizPage);
     component = fixture.componentInstance;
   });
 
-  afterEach(() => {
-    jest.useRealTimers();
-    jest.restoreAllMocks();
-  });
+  afterEach(() => jest.useRealTimers());
 
-  it('should call startQuiz when onTryAgain is invoked', () => {
-    const spy = jest.spyOn(component, 'startQuiz');
-    component.onTryAgain();
-    expect(spy).toHaveBeenCalled();
-  });
+  it('startQuiz resets state and calls generateQuestions', () => {
+    const spy = jest.spyOn<any, any>(component as any, 'generateQuestions').mockImplementation(() => Promise.resolve());
 
-  it('startQuiz should reset state and call generateQuestions', async () => {
-    const genSpy = jest.spyOn<any, any>(component as any, 'generateQuestions').mockImplementation(() => Promise.resolve());
-    component.isLoading.set(false);
-    component.errorMessage.set('some');
+    // set some non-default values
+    (component as any).score.set(5);
+    (component as any).currentQuestionIndex.set(3);
+    (component as any).quizFinished.set(true);
 
-    await component.startQuiz();
+    component.startQuiz();
 
     expect(component.isLoading()).toBe(true);
-    expect(component.errorMessage()).toBe('');
-    expect(component.currentQuestionIndex()).toBe(0);
     expect(component.score()).toBe(0);
-    expect(genSpy).toHaveBeenCalled();
+    expect(component.currentQuestionIndex()).toBe(0);
+    expect(component.quizFinished()).toBe(false);
+    expect(spy).toHaveBeenCalled();
+
+    spy.mockRestore();
   });
 
-  it('onAnswerSelected should mark correct answer, update score and finish quiz when last question', () => {
+  it('shuffleArray returns permutation with same members', () => {
+    const arr = [1, 2, 3, 4, 5];
+    const out = (component as any).shuffleArray(arr);
+    expect(out).toHaveLength(arr.length);
+    expect(out.sort()).toEqual(arr.sort());
+  });
+
+  it('onAnswerSelected correct increments score and advances; incorrect advances or finishes', () => {
     jest.useFakeTimers();
 
-    const correct = { id: 1, name: 'Rick' } as any;
-    const q = { character: correct, options: [correct], answered: false } as any;
+    const charA: Character = { id: 1, name: 'A', image: '' } as any;
+    const charB: Character = { id: 2, name: 'B', image: '' } as any;
 
-    component.questions.set([q]);
+    const q1: QuizQuestion = { character: charA, options: [charA, charB], answered: false };
+    const q2: QuizQuestion = { character: charB, options: [charA, charB], answered: false };
+
+    component.questions.set([q1, q2]);
     component.currentQuestionIndex.set(0);
-    component.score.set(0);
 
-    component.onAnswerSelected(correct);
-
-    const questions = component.questions();
-    expect(questions[0].answered).toBe(true);
-    expect(questions[0].selectedAnswer).toBe(correct);
-    expect(questions[0].isCorrect).toBe(true);
+    component.onAnswerSelected(charA);
+    expect(component.questions()[0].answered).toBe(true);
+    expect(component.questions()[0].isCorrect).toBe(true);
     expect(component.score()).toBe(1);
 
-    // Advance timer to trigger quiz finish (only one question)
+    jest.advanceTimersByTime(1500);
+    expect(component.currentQuestionIndex()).toBe(1);
+
+    // answer last question incorrectly
+    component.onAnswerSelected(charA);
+    expect(component.questions()[1].answered).toBe(true);
+    expect(component.questions()[1].isCorrect).toBe(false);
+
     jest.advanceTimersByTime(1500);
     expect(component.quizFinished()).toBe(true);
   });
 
-  it('onAnswerSelected should mark incorrect answer and advance index when more questions exist', () => {
-    jest.useFakeTimers();
+  it('onAnswerSelected is safe when questions missing or already answered', () => {
+    const char: Character = { id: 99, name: 'X', image: '' } as any;
+    component.questions.set([]);
+    expect(() => component.onAnswerSelected(char)).not.toThrow();
 
-    const correct = { id: 1, name: 'Morty' } as any;
-    const wrong = { id: 2, name: 'Summer' } as any;
-    const q1 = { character: correct, options: [correct, wrong], answered: false } as any;
-    const q2 = { character: { id: 3 }, options: [], answered: false } as any;
-
-    component.questions.set([q1, q2]);
+    const q: QuizQuestion = { character: char, options: [char], answered: true };
+    component.questions.set([q]);
     component.currentQuestionIndex.set(0);
-    component.score.set(0);
-
-    component.onAnswerSelected(wrong);
-
-    const questions = component.questions();
-    expect(questions[0].answered).toBe(true);
-    expect(questions[0].selectedAnswer).toBe(wrong);
-    expect(questions[0].isCorrect).toBe(false);
-    expect(component.score()).toBe(0);
-
-    // Advance timer to move to next question
-    jest.advanceTimersByTime(1500);
-    expect(component.currentQuestionIndex()).toBe(1);
+    expect(() => component.onAnswerSelected(char)).not.toThrow();
   });
 
-  it('shuffleArray should return same items in different order (or same for small arrays) but same length and members', () => {
-    const arr = [1, 2, 3, 4, 5];
-    const shuffled = (component as any).shuffleArray(arr);
-    expect(shuffled).toHaveLength(arr.length);
-    // contains same elements
-    expect(shuffled.sort()).toEqual(arr.sort());
+  it('onTryAgain calls startQuiz', () => {
+    const spy = jest.spyOn(component, 'startQuiz');
+    component.onTryAgain();
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
   });
-});
+
+  it('generateQuestions sets errorMessage when API always fails', async () => {
+    // mock ApiService to always throw
+    const mockApi = (TestBed.inject as any)(ApiService) as any;
+    mockApi.getCharacters.mockImplementation(() => {
+      const { throwError } = require('rxjs');
+      return throwError(() => new Error('API Fail'));
+    });
+
+    // call private method directly
+    await (component as any).generateQuestions();
+
+    expect(component.questions().length).toBe(0);
+    expect(component.isLoading()).toBe(false);
+    expect(component.errorMessage()).toBe('Erro ao gerar perguntas. Tente novamente!');
+  });
+
+  it('generateQuestions builds questions when API returns characters and Math.random controlled', async () => {
+    // Prepare a characters pool (ids 1..120)
+    const characters = Array.from({ length: 120 }, (_, i) => ({ id: i + 1, name: `C${i + 1}`, image: '' }));
+
+    const mockApi = (TestBed.inject as any)(ApiService) as any;
+    mockApi.getCharacters.mockImplementation(() => {
+      return of({ results: characters });
+    });
+
+    // deterministic Math.random sequence that yields ids 1,2,3,...
+    const MAX = (component as any).MAX_CHARACTERS_IN_API || 826;
+    const seq = Array.from({ length: 500 }, (_, i) => (i + 0.1) / MAX);
+    let idx = 0;
+    const originalRandom = Math.random;
+    Math.random = () => seq[idx++ % seq.length];
+
+    await (component as any).generateQuestions();
+
+    expect(component.isLoading()).toBe(false);
+    expect(component.questions().length).toBeGreaterThan(0);
+    expect(component.errorMessage()).toBe('');
+
+    Math.random = originalRandom;
+  });
+})

@@ -63,4 +63,30 @@ describe('StorageService (unit)', () => {
     expect(localStorage.setItem).not.toHaveBeenCalled();
     expect(serverSvc.getItem('s')).toBeNull();
   });
+
+  it('setItem should not throw if localStorage.setItem fails', () => {
+    (svc as any).isBrowser = true;
+    jest.spyOn(localStorage, 'setItem').mockImplementation(() => { throw new Error('fail'); });
+    expect(() => svc.setItem('fail', { a: 1 })).not.toThrow();
+  });
+
+  it('removeItem should not throw if localStorage.removeItem fails', () => {
+    (svc as any).isBrowser = true;
+    jest.spyOn(localStorage, 'removeItem').mockImplementation(() => { throw new Error('fail'); });
+    expect(() => svc.removeItem('fail')).not.toThrow();
+  });
+
+  it('clear should not throw if localStorage.clear fails', () => {
+    (svc as any).isBrowser = true;
+    jest.spyOn(localStorage, 'clear').mockImplementation(() => { throw new Error('fail'); });
+    expect(() => svc.clear()).not.toThrow();
+  });
+
+  it('setItem/getItem/removeItem/clear should be no-op if not browser', () => {
+    (svc as any).isBrowser = false;
+    expect(() => svc.setItem('x', 1)).not.toThrow();
+    expect(svc.getItem('x')).toBeNull();
+    expect(() => svc.removeItem('x')).not.toThrow();
+    expect(() => svc.clear()).not.toThrow();
+  });
 });

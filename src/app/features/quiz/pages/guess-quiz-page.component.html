@@ -1,6 +1,6 @@
 <div class="guess-quiz-page">
   <div class="guess-quiz-page__container">
-    <!-- Loading State -->
+    
     @if (isLoading()) {
       <div class="loading-container">
         <div class="loading-spinner"></div>
@@ -8,7 +8,7 @@
       </div>
     }
 
-    <!-- Error State -->
+    
     @if (errorMessage() && !isLoading()) {
       <div class="error-message">
         <p>{{ errorMessage() }}</p>
@@ -18,7 +18,7 @@
       </div>
     }
 
-    <!-- Quiz Header -->
+    
     @if (!isLoading() && !errorMessage() && !quizFinished()) {
       <div class="quiz-header">
         <h1 class="quiz-header__title">Adivinhe o Personagem</h1>
@@ -38,7 +38,7 @@
       </div>
     }
 
-    <!-- Current Question -->
+    
     @if (currentQuestion() && !quizFinished()) {
       <app-question-card
         [question]="currentQuestion()!"
@@ -46,7 +46,7 @@
       />
     }
 
-    <!-- Quiz Result -->
+    
     @if (quizFinished()) {
       <app-guess-quiz-result
         [score]="score()"

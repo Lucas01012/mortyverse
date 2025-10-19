@@ -14,7 +14,6 @@ describe('CharacterDetailModal', () => {
     fixture = TestBed.createComponent(CharacterDetailModal);
     component = fixture.componentInstance;
     
-    // Set required inputs
     fixture.componentRef.setInput('isOpen', false);
     fixture.detectChanges();
   });

@@ -170,6 +170,36 @@ describe('LazyImageDirective', () => {
     expect(loadImageSpy).toHaveBeenCalled();
   });
 
+  it('should set src directly when not running in browser (server)', () => {
+    const directive = imgElement.injector.get(LazyImageDirective);
+
+    // simulate server environment
+    (directive as any).isBrowser = false;
+
+    // change bound input and run change detection so the input signal updates
+    fixture.componentInstance.imageSrc = 'https://example.com/server-image.jpg';
+    fixture.detectChanges();
+
+    // call ngOnInit manually to run server branch (re-run server logic)
+    (directive as any).ngOnInit();
+
+    const img = imgElement.nativeElement as HTMLImageElement;
+    expect(img.src).toContain('server-image.jpg');
+  });
+
+  it('loadImage should return early when not browser', () => {
+    const directive = imgElement.injector.get(LazyImageDirective);
+    (directive as any).isBrowser = false;
+
+    const img = imgElement.nativeElement as HTMLImageElement;
+    const prevSrc = img.src;
+
+    (directive as any).loadImage('https://example.com/should-not-load.jpg');
+
+    // src should remain unchanged because loadImage returns early
+    expect(img.src).toBe(prevSrc);
+  });
+
   it('should NOT load image if not intersecting', () => {
     const directive = imgElement.injector.get(LazyImageDirective);
     const loadImageSpy = jest.spyOn(directive as any, 'loadImage');

@@ -25,7 +25,6 @@ describe('GuessQuizPage', () => {
   it('startQuiz resets state and calls generateQuestions', () => {
     const spy = jest.spyOn<any, any>(component as any, 'generateQuestions').mockImplementation(() => Promise.resolve());
 
-    // set some non-default values
     (component as any).score.set(5);
     (component as any).currentQuestionIndex.set(3);
     (component as any).quizFinished.set(true);
@@ -68,7 +67,6 @@ describe('GuessQuizPage', () => {
     jest.advanceTimersByTime(1500);
     expect(component.currentQuestionIndex()).toBe(1);
 
-    // answer last question incorrectly
     component.onAnswerSelected(charA);
     expect(component.questions()[1].answered).toBe(true);
     expect(component.questions()[1].isCorrect).toBe(false);
@@ -96,14 +94,12 @@ describe('GuessQuizPage', () => {
   });
 
   it('generateQuestions sets errorMessage when API always fails', async () => {
-    // mock ApiService to always throw
     const mockApi = (TestBed.inject as any)(ApiService) as any;
     mockApi.getCharacters.mockImplementation(() => {
       const { throwError } = require('rxjs');
       return throwError(() => new Error('API Fail'));
     });
 
-    // call private method directly
     await (component as any).generateQuestions();
 
     expect(component.questions().length).toBe(0);
@@ -112,7 +108,6 @@ describe('GuessQuizPage', () => {
   });
 
   it('generateQuestions builds questions when API returns characters and Math.random controlled', async () => {
-    // Prepare a characters pool (ids 1..120)
     const characters = Array.from({ length: 120 }, (_, i) => ({ id: i + 1, name: `C${i + 1}`, image: '' }));
 
     const mockApi = (TestBed.inject as any)(ApiService) as any;
@@ -120,7 +115,6 @@ describe('GuessQuizPage', () => {
       return of({ results: characters });
     });
 
-    // deterministic Math.random sequence that yields ids 1,2,3,...
     const MAX = (component as any).MAX_CHARACTERS_IN_API || 826;
     const seq = Array.from({ length: 500 }, (_, i) => (i + 0.1) / MAX);
     let idx = 0;

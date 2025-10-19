@@ -11,10 +11,8 @@ import { QuizQuestion } from '../../pages/guess-quiz-page.component';
   styleUrls: ['./question-card.component.scss']
 })
 export class QuestionCard {
-  // Inputs
   question = input.required<QuizQuestion>();
 
-  // Outputs
   answerSelected = output<Character>();
 
   onOptionClick(character: Character): void {

@@ -16,15 +16,12 @@ export interface QuizFilters {
   styleUrls: ['./quiz-form.component.scss']
 })
 export class QuizForm {
-  // Outputs
   submitFilters = output<QuizFilters>();
 
-  // Form fields signals
   selectedStatus = signal<string>('');
   selectedSpecies = signal<string>('');
   selectedGender = signal<string>('');
 
-  // Opções disponíveis (valores devem corresponder exatamente aos da API)
   statusOptions = [
     { value: '', label: 'Qualquer' },
     { value: 'Alive', label: 'Vivo' },

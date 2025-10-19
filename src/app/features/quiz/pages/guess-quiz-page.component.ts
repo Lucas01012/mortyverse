@@ -67,7 +67,6 @@ export class GuessQuizPage {
       const usedCharacterIds = new Set<number>();
 
       for (let i = 0; i < this.TOTAL_QUESTIONS; i++) {
-        // Buscar personagem aleatório para a pergunta
         let correctCharacter: Character | null = null;
         let attempts = 0;
         const maxAttempts = 10;
@@ -95,7 +94,6 @@ export class GuessQuizPage {
           continue;
         }
 
-        // Gerar opções incorretas
         const incorrectOptions: Character[] = [];
         let optionAttempts = 0;
         const maxOptionAttempts = 50;
@@ -119,7 +117,6 @@ export class GuessQuizPage {
         }
 
         if (incorrectOptions.length === this.OPTIONS_PER_QUESTION - 1) {
-          // Misturar as opções
           const allOptions = [correctCharacter, ...incorrectOptions];
           const shuffledOptions = this.shuffleArray(allOptions);
 
@@ -162,7 +159,6 @@ export class GuessQuizPage {
       return;
     }
 
-    // Marcar questão como respondida
     const isCorrect = selectedCharacter.id === currentQuestion.character.id;
     currentQuestion.answered = true;
     currentQuestion.selectedAnswer = selectedCharacter;
@@ -174,7 +170,6 @@ export class GuessQuizPage {
 
     this.questions.set([...questions]);
 
-    // Avançar para próxima questão após 1.5 segundos
     setTimeout(() => {
       if (currentIndex < questions.length - 1) {
         this.currentQuestionIndex.set(currentIndex + 1);

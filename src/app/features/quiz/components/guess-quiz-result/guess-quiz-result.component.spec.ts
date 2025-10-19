@@ -50,7 +50,6 @@ describe('GuessQuizResult', () => {
 
   it('emits tryAgain when button clicked', () => {
     const spy = jest.fn();
-    // subscribe to the output emitter
     (component as any).tryAgain.subscribe(spy as any);
     fixture.detectChanges();
 

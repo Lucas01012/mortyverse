@@ -15,7 +15,6 @@ import { Character } from '../../../core/models/character.model';
 export class QuizPage {
   private apiService = inject(ApiService);
 
-  // State
   resultCharacter = signal<Character | null>(null);
   isLoading = signal<boolean>(false);
   errorMessage = signal<string>('');
@@ -25,7 +24,6 @@ export class QuizPage {
     this.errorMessage.set('');
     this.resultCharacter.set(null);
 
-    // Converte QuizFilters para CharacterFilters
     const characterFilters: any = {
       page: 1,
       ...filters
@@ -34,7 +32,6 @@ export class QuizPage {
     this.apiService.getCharacters(characterFilters).subscribe({
       next: (response) => {
         if (response.results.length > 0) {
-          // Sorteia um personagem aleatório dos resultados
           const randomIndex = Math.floor(Math.random() * response.results.length);
           const randomCharacter = response.results[randomIndex];
           

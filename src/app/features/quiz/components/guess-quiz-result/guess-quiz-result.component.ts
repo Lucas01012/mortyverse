@@ -15,7 +15,6 @@ export class GuessQuizResult {
   @Input() questions!: QuizQuestion[];
   @Output() tryAgain = new EventEmitter<void>();
 
-  // Métodos auxiliares para template (se necessário)
   scoreFn(): number {
     return this.score ?? 0;
   }

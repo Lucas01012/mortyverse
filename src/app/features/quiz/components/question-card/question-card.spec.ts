@@ -15,7 +15,6 @@ describe('QuestionCard', () => {
     fixture = TestBed.createComponent(QuestionCard);
     component = fixture.componentInstance;
     
-    // Set required inputs using TestBed
     const mockQuestion = {
       character: {
         id: 1,
@@ -255,7 +254,6 @@ describe('QuestionCard', () => {
     fixture.componentRef.setInput('question', answeredQuestion);
     fixture.detectChanges();
 
-    // Test the correct character shows as correct
     const result = component.getOptionClass(correctCharacter);
 
     expect(result).toBe('option option--correct');

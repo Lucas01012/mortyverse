@@ -11,10 +11,8 @@ import { LazyImageDirective } from '../../../../shared/directives/lazy-image.dir
   styleUrls: ['./quiz-result.component.scss']
 })
 export class QuizResult {
-  // Inputs
   character = input<Character | null>(null);
 
-  // Outputs
   tryAgain = output<void>();
 
   onTryAgain(): void {

@@ -1,15 +1,10 @@
-// Use jest-preset-angular setup which initializes the Angular testing environment
-// Use the setup helper from jest-preset-angular v15 to initialize the Angular test env
 import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
 
-// initialize the Zone-based Angular test environment (similar to old setup-jest)
 setupZoneTestEnv();
 
-// Provide Zone.js testing support (jest-preset-angular normally sets this up, but keep explicit import)
 import 'zone.js';
 import 'zone.js/testing';
 
-// Shim minimal Jasmine API used by some specs (createSpyObj, spyOn) to map to Jest
 if (!(global as any).jasmine) {
   const makeJasmineSpy = (impl?: Function) => {
     const spy: any = jest.fn(impl as any);
@@ -39,10 +34,8 @@ if (!(global as any).jasmine) {
   };
 }
 
-// Provide spyOn global (maps to jest.spyOn for objects)
 if (!(global as any).spyOn) {
   (global as any).spyOn = function (obj: any, methodName: string) {
-    // Create a jest spy for the property and attach jasmine-like `.and` helpers
     const original = obj[methodName];
     const jestSpy: any = jest.spyOn(obj, methodName as any);
     jestSpy.and = {
@@ -59,7 +52,6 @@ if (!(global as any).spyOn) {
   };
 }
 
-// Mock do localStorage
 const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
@@ -71,7 +63,6 @@ Object.defineProperty(global, 'localStorage', {
   writable: true,
 });
 
-// Mock do window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
@@ -86,7 +77,6 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Mock do IntersectionObserver
 class MockIntersectionObserver {
   constructor() {}
   disconnect() {}

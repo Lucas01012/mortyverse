@@ -53,7 +53,6 @@ describe('ListDetailPage', () => {
     const router = TestBed.inject(Router);
     const navigateSpy = jest.spyOn(router as any, 'navigate');
     
-    // Create component with no ID
     const route = TestBed.inject(ActivatedRoute);
     route.snapshot.paramMap.get = jest.fn().mockReturnValue(null);
     
@@ -128,7 +127,6 @@ describe('ListDetailPage', () => {
 
     expect(component['isDetailModalOpen']()).toBe(false);
     
-    // Character is cleared after 300ms timeout
     tick(300);
     expect(component['selectedCharacter']()).toBeNull();
   }));
@@ -257,7 +255,6 @@ describe('ListDetailPage', () => {
   });
 
   it('should not remove character if list or characterToRemove is null', () => {
-    // Mock Character completo
     const mockCharacter = {
       id: 1,
       name: 'Rick',
@@ -272,7 +269,6 @@ describe('ListDetailPage', () => {
       url: '',
       created: ''
     };
-    // Mock CustomList completo
     const mockList = {
       id: '1',
       name: 'Test',
@@ -284,11 +280,9 @@ describe('ListDetailPage', () => {
     component['list'].set(null);
     component['characterToRemove'].set(mockCharacter);
     (component as any).onRemoveCharacter();
-    // Should not throw ou chamar nada
     component['list'].set(mockList);
     component['characterToRemove'].set(null);
     (component as any).onRemoveCharacter();
-    // Should not throw ou chamar nada
   });
 
   it('should not update list when currentList is null', () => {

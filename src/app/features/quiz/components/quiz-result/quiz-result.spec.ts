@@ -20,4 +20,13 @@ describe('QuizResult', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit tryAgain when onTryAgain is called', () => {
+    const emitSpy = jest.fn();
+    (component as any).tryAgain.subscribe(emitSpy);
+    
+    (component as any).onTryAgain();
+    
+    expect(emitSpy).toHaveBeenCalled();
+  });
 });

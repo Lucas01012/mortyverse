@@ -41,10 +41,10 @@ export class GuessQuizResult {
 
   performanceMessage(): string {
     const p = this.percentage();
-    if (p >= 80) return 'Excelente! Você mandou muito bem.';
-    if (p >= 60) return 'Bom trabalho! Continue praticando.';
-    if (p >= 40) return 'Quase lá — continue tentando.';
-    return 'Não desanime — tente novamente!';
+    if (p >= 80) return 'Wubba Lubba Dub-Dub! Você arrebentou!!!';
+    if (p >= 60) return 'Nada mal, terráqueo! Tá no caminho pra virar um Morty decente.';
+    if (p >= 40) return 'Ugh... já vi plumbus funcionarem melhor que isso. Continua tentando!';
+    return 'Meu deus, Morty! Foi um desastre cósmico! Tenta de novo antes que o universo colapse.';
   }
 
   onTryAgain(): void {
